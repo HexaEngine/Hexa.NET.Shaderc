@@ -1,0 +1,1 @@
+﻿A .NET wrapper for the Shaderc (v2023.3) library.

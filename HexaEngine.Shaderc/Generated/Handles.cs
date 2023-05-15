@@ -16,46 +16,46 @@ namespace HexaEngine.Shaderc
 	/// A dispatchable handle.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
-	public readonly partial struct ShadercCompilerT : IEquatable<ShadercCompilerT>
+	public readonly partial struct ShadercCompiler : IEquatable<ShadercCompiler>
 	{
-		public ShadercCompilerT(nint handle) { Handle = handle; }
+		public ShadercCompiler(nint handle) { Handle = handle; }
 		public nint Handle { get; }
 		public bool IsNull => Handle == 0;
-		public static ShadercCompilerT Null => new ShadercCompilerT(0);
-		public static implicit operator ShadercCompilerT(nint handle) => new ShadercCompilerT(handle);
-		public static bool operator ==(ShadercCompilerT left, ShadercCompilerT right) => left.Handle == right.Handle;
-		public static bool operator !=(ShadercCompilerT left, ShadercCompilerT right) => left.Handle != right.Handle;
-		public static bool operator ==(ShadercCompilerT left, nint right) => left.Handle == right;
-		public static bool operator !=(ShadercCompilerT left, nint right) => left.Handle != right;
-		public bool Equals(ShadercCompilerT other) => Handle == other.Handle;
+		public static ShadercCompiler Null => new ShadercCompiler(0);
+		public static implicit operator ShadercCompiler(nint handle) => new ShadercCompiler(handle);
+		public static bool operator ==(ShadercCompiler left, ShadercCompiler right) => left.Handle == right.Handle;
+		public static bool operator !=(ShadercCompiler left, ShadercCompiler right) => left.Handle != right.Handle;
+		public static bool operator ==(ShadercCompiler left, nint right) => left.Handle == right;
+		public static bool operator !=(ShadercCompiler left, nint right) => left.Handle != right;
+		public bool Equals(ShadercCompiler other) => Handle == other.Handle;
 		/// <inheritdoc/>
-		public override bool Equals(object obj) => obj is ShadercCompilerT handle && Equals(handle);
+		public override bool Equals(object obj) => obj is ShadercCompiler handle && Equals(handle);
 		/// <inheritdoc/>
 		public override int GetHashCode() => Handle.GetHashCode();
-		private string DebuggerDisplay => string.Format("ShadercCompilerT [0x{0}]", Handle.ToString("X"));
+		private string DebuggerDisplay => string.Format("ShadercCompiler [0x{0}]", Handle.ToString("X"));
 	}
 
 	/// <summary>
 	/// A dispatchable handle.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
-	public readonly partial struct ShadercCompileOptionsT : IEquatable<ShadercCompileOptionsT>
+	public readonly partial struct ShadercCompileOptions : IEquatable<ShadercCompileOptions>
 	{
-		public ShadercCompileOptionsT(nint handle) { Handle = handle; }
+		public ShadercCompileOptions(nint handle) { Handle = handle; }
 		public nint Handle { get; }
 		public bool IsNull => Handle == 0;
-		public static ShadercCompileOptionsT Null => new ShadercCompileOptionsT(0);
-		public static implicit operator ShadercCompileOptionsT(nint handle) => new ShadercCompileOptionsT(handle);
-		public static bool operator ==(ShadercCompileOptionsT left, ShadercCompileOptionsT right) => left.Handle == right.Handle;
-		public static bool operator !=(ShadercCompileOptionsT left, ShadercCompileOptionsT right) => left.Handle != right.Handle;
-		public static bool operator ==(ShadercCompileOptionsT left, nint right) => left.Handle == right;
-		public static bool operator !=(ShadercCompileOptionsT left, nint right) => left.Handle != right;
-		public bool Equals(ShadercCompileOptionsT other) => Handle == other.Handle;
+		public static ShadercCompileOptions Null => new ShadercCompileOptions(0);
+		public static implicit operator ShadercCompileOptions(nint handle) => new ShadercCompileOptions(handle);
+		public static bool operator ==(ShadercCompileOptions left, ShadercCompileOptions right) => left.Handle == right.Handle;
+		public static bool operator !=(ShadercCompileOptions left, ShadercCompileOptions right) => left.Handle != right.Handle;
+		public static bool operator ==(ShadercCompileOptions left, nint right) => left.Handle == right;
+		public static bool operator !=(ShadercCompileOptions left, nint right) => left.Handle != right;
+		public bool Equals(ShadercCompileOptions other) => Handle == other.Handle;
 		/// <inheritdoc/>
-		public override bool Equals(object obj) => obj is ShadercCompileOptionsT handle && Equals(handle);
+		public override bool Equals(object obj) => obj is ShadercCompileOptions handle && Equals(handle);
 		/// <inheritdoc/>
 		public override int GetHashCode() => Handle.GetHashCode();
-		private string DebuggerDisplay => string.Format("ShadercCompileOptionsT [0x{0}]", Handle.ToString("X"));
+		private string DebuggerDisplay => string.Format("ShadercCompileOptions [0x{0}]", Handle.ToString("X"));
 	}
 
 	/// <summary>
@@ -108,23 +108,23 @@ namespace HexaEngine.Shaderc
 	/// A dispatchable handle.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
-	public readonly partial struct ShadercCompilationResultT : IEquatable<ShadercCompilationResultT>
+	public readonly partial struct ShadercCompilationResult : IEquatable<ShadercCompilationResult>
 	{
-		public ShadercCompilationResultT(nint handle) { Handle = handle; }
+		public ShadercCompilationResult(nint handle) { Handle = handle; }
 		public nint Handle { get; }
 		public bool IsNull => Handle == 0;
-		public static ShadercCompilationResultT Null => new ShadercCompilationResultT(0);
-		public static implicit operator ShadercCompilationResultT(nint handle) => new ShadercCompilationResultT(handle);
-		public static bool operator ==(ShadercCompilationResultT left, ShadercCompilationResultT right) => left.Handle == right.Handle;
-		public static bool operator !=(ShadercCompilationResultT left, ShadercCompilationResultT right) => left.Handle != right.Handle;
-		public static bool operator ==(ShadercCompilationResultT left, nint right) => left.Handle == right;
-		public static bool operator !=(ShadercCompilationResultT left, nint right) => left.Handle != right;
-		public bool Equals(ShadercCompilationResultT other) => Handle == other.Handle;
+		public static ShadercCompilationResult Null => new ShadercCompilationResult(0);
+		public static implicit operator ShadercCompilationResult(nint handle) => new ShadercCompilationResult(handle);
+		public static bool operator ==(ShadercCompilationResult left, ShadercCompilationResult right) => left.Handle == right.Handle;
+		public static bool operator !=(ShadercCompilationResult left, ShadercCompilationResult right) => left.Handle != right.Handle;
+		public static bool operator ==(ShadercCompilationResult left, nint right) => left.Handle == right;
+		public static bool operator !=(ShadercCompilationResult left, nint right) => left.Handle != right;
+		public bool Equals(ShadercCompilationResult other) => Handle == other.Handle;
 		/// <inheritdoc/>
-		public override bool Equals(object obj) => obj is ShadercCompilationResultT handle && Equals(handle);
+		public override bool Equals(object obj) => obj is ShadercCompilationResult handle && Equals(handle);
 		/// <inheritdoc/>
 		public override int GetHashCode() => Handle.GetHashCode();
-		private string DebuggerDisplay => string.Format("ShadercCompilationResultT [0x{0}]", Handle.ToString("X"));
+		private string DebuggerDisplay => string.Format("ShadercCompilationResult [0x{0}]", Handle.ToString("X"));
 	}
 
 }

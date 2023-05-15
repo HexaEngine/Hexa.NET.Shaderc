@@ -48,6 +48,14 @@
 
         private static string NormalizeFieldName(string name)
         {
+            var parts = name.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder sb = new();
+            for (int i = 0; i < parts.Length; i++)
+            {
+                sb.Append(char.ToUpper(parts[i][0]));
+                sb.Append(parts[i][1..]);
+            }
+            name = sb.ToString();
             if (s_keywords.Contains(name))
                 return "@" + name;
 
@@ -88,6 +96,11 @@
                 sb.Append(c);
             }
 
+            if (sb[^1] == 'T')
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
             return sb.ToString();
         }
 
@@ -115,7 +128,7 @@
             if (type is CppTypedef typedef)
             {
                 var typeDefCsName = GetCsCleanName(typedef.Name);
-                if (typedef.ElementType.TypeKind == CppTypeKind.Pointer)
+                if (isPointer)
                     return typeDefCsName + "*";
 
                 return typeDefCsName;

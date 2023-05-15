@@ -98,6 +98,8 @@
 
         private static string GetEnumItemName(CppEnum @enum, string cppEnumItemName, string enumNamePrefix)
         {
+            if (cppEnumItemName.StartsWith("0x"))
+                return cppEnumItemName;
             string enumItemName = GetPrettyEnumName(cppEnumItemName, enumNamePrefix);
 
             return enumItemName;
@@ -192,40 +194,98 @@
             {
                 return knownName;
             }
-            string[] parts;
-            if (value.IndexOf(enumPrefix, StringComparison.InvariantCultureIgnoreCase) != 0)
-            {
-                parts = value.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-            }
-            else
-            {
-                parts = value[enumPrefix.Length..].Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-            }
 
+            string[] parts = value.Split('_', StringSplitOptions.RemoveEmptyEntries).SelectMany(x => x.SplitByCase()).ToArray();
+            string[] prefixParts = enumPrefix.Split('_', StringSplitOptions.RemoveEmptyEntries);
+
+            bool capture = false;
             var sb = new StringBuilder();
-            foreach (string part in parts)
+            for (int i = 0; i < parts.Length; i++)
             {
-                if (s_ignoredParts.Contains(part))
+                string part = parts[i];
+                if (s_ignoredParts.Contains(part) || (prefixParts.Contains(part, StringComparer.InvariantCultureIgnoreCase) && !capture))
                 {
                     continue;
                 }
 
-                if (s_preserveCaps.Contains(part))
+                part = part.ToLower();
+
+                sb.Append(char.ToUpper(part[0]));
+                sb.Append(part[1..]);
+                capture = true;
+            }
+
+            if (sb.Length == 0)
+                sb.Append(value);
+
+            string prettyName = sb.ToString();
+            return (char.IsNumber(prettyName[0])) ? prefixParts[^1].ToCamelCase() + prettyName : prettyName;
+        }
+
+        public static unsafe string ToCamelCase(this string str)
+        {
+            string output = new('\0', str.Length);
+            fixed (char* p = output)
+            {
+                p[0] = char.ToUpper(str[0]);
+                for (int i = 1; i < str.Length; i++)
                 {
-                    sb.Append(part);
+                    p[i] = char.ToLower(str[i]);
+                }
+            }
+            return output;
+        }
+
+        public static string[] SplitByCase(this string s)
+        {
+            var ʀ = new List<string>();
+            var ᴛ = new StringBuilder();
+            var previous = SplitByCaseModes.None;
+            foreach (var ɪ in s)
+            {
+                SplitByCaseModes mode_ɪ;
+                if (string.IsNullOrWhiteSpace(ɪ.ToString()))
+                {
+                    mode_ɪ = SplitByCaseModes.WhiteSpace;
+                }
+                else if ("0123456789".Contains(ɪ))
+                {
+                    mode_ɪ = SplitByCaseModes.Digit;
+                }
+                else if (ɪ == ɪ.ToString().ToUpper()[0])
+                {
+                    mode_ɪ = SplitByCaseModes.UpperCase;
                 }
                 else
                 {
-                    sb.Append(char.ToUpper(part[0]));
-                    for (int i = 1; i < part.Length; i++)
-                    {
-                        sb.Append(char.ToLower(part[i]));
-                    }
+                    mode_ɪ = SplitByCaseModes.LowerCase;
                 }
+                if ((previous == SplitByCaseModes.None) || (previous == mode_ɪ))
+                {
+                    ᴛ.Append(ɪ);
+                }
+                else if ((previous == SplitByCaseModes.UpperCase) && (mode_ɪ == SplitByCaseModes.LowerCase))
+                {
+                    if (ᴛ.Length > 1)
+                    {
+                        ʀ.Add(ᴛ.ToString().Substring(0, ᴛ.Length - 1));
+                        ᴛ.Remove(0, ᴛ.Length - 1);
+                    }
+                    ᴛ.Append(ɪ);
+                }
+                else
+                {
+                    ʀ.Add(ᴛ.ToString());
+                    ᴛ.Clear();
+                    ᴛ.Append(ɪ);
+                }
+                previous = mode_ɪ;
             }
-
-            string prettyName = sb.ToString();
-            return (char.IsNumber(prettyName[0])) ? "_" + prettyName : prettyName;
+            if (ᴛ.Length != 0) ʀ.Add(ᴛ.ToString());
+            return ʀ.ToArray();
         }
+
+        private enum SplitByCaseModes
+        { None, WhiteSpace, Digit, UpperCase, LowerCase }
     }
 }

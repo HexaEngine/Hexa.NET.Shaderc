@@ -3,8 +3,8 @@ namespace HexaEngine.Shaderc.Tests
     [TestFixture]
     public unsafe class HlslTests
     {
-        private ShadercCompilerT* compiler;
-        private ShadercCompileOptionsT* options;
+        private ShadercCompiler compiler;
+        private ShadercCompileOptions options;
         private nuint sourceSize;
         private byte* pSource;
         private byte* pFilename;
@@ -30,7 +30,7 @@ namespace HexaEngine.Shaderc.Tests
         [Test]
         public void HLSLCompile()
         {
-            ShadercCompilationResultT* result = Shaderc.ShadercCompileIntoSpv(compiler, pSource, sourceSize, ShadercShaderKind.ShadercGlslVertexShader, pFilename, pEntrypoint, options);
+            ShadercCompilationResult result = Shaderc.ShadercCompileIntoSpv(compiler, pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
 
             CheckResult(result);
             CloneResult(result);
@@ -41,7 +41,7 @@ namespace HexaEngine.Shaderc.Tests
         [Test]
         public void HLSLPreprocess()
         {
-            ShadercCompilationResultT* result = Shaderc.ShadercCompileIntoPreprocessedText(compiler, pSource, sourceSize, ShadercShaderKind.ShadercGlslVertexShader, pFilename, pEntrypoint, options);
+            ShadercCompilationResult result = Shaderc.ShadercCompileIntoPreprocessedText(compiler, pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
 
             CheckResult(result);
             var text = ResultAsString(result);
@@ -54,7 +54,7 @@ namespace HexaEngine.Shaderc.Tests
         [Test]
         public void HLSLAssemble()
         {
-            ShadercCompilationResultT* asmResult = Shaderc.ShadercCompileIntoSpvAssembly(compiler, pSource, sourceSize, ShadercShaderKind.ShadercGlslVertexShader, pFilename, pEntrypoint, options);
+            ShadercCompilationResult asmResult = Shaderc.ShadercCompileIntoSpvAssembly(compiler, pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
 
             CheckResult(asmResult);
             CloneResult(asmResult);
@@ -62,7 +62,7 @@ namespace HexaEngine.Shaderc.Tests
             var length = Shaderc.ShadercResultGetLength(asmResult);
             var bytecode = Shaderc.ShadercResultGetBytes(asmResult);
 
-            ShadercCompilationResultT* spvResult = Shaderc.ShadercAssembleIntoSpv(compiler, bytecode, length, options);
+            ShadercCompilationResult spvResult = Shaderc.ShadercAssembleIntoSpv(compiler, bytecode, length, options);
 
             Shaderc.ShadercResultRelease(asmResult);
 
@@ -82,7 +82,7 @@ namespace HexaEngine.Shaderc.Tests
             Shaderc.ShadercCompilerRelease(compiler);
         }
 
-        private static void CheckResult(ShadercCompilationResultT* result)
+        private static void CheckResult(ShadercCompilationResult result)
         {
             var status = Shaderc.ShadercResultGetCompilationStatus(result);
             if (status != ShadercCompilationStatus.Success)
@@ -98,7 +98,7 @@ namespace HexaEngine.Shaderc.Tests
             }
         }
 
-        private static void CloneResult(ShadercCompilationResultT* result)
+        private static void CloneResult(ShadercCompilationResult result)
         {
             var length = Shaderc.ShadercResultGetLength(result);
             var bytecode = Shaderc.ShadercResultGetBytes(result);
@@ -108,7 +108,7 @@ namespace HexaEngine.Shaderc.Tests
                 Buffer.MemoryCopy(bytecode, ptr, length, length);
         }
 
-        private static string ResultAsString(ShadercCompilationResultT* result)
+        private static string ResultAsString(ShadercCompilationResult result)
         {
             var bytecode = Shaderc.ShadercResultGetBytes(result);
             var text = ToStringUTF16(bytecode);

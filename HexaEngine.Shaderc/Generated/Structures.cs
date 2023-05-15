@@ -15,11 +15,11 @@ namespace HexaEngine.Shaderc
 	[StructLayout(LayoutKind.Sequential)]
 	public partial struct ShadercIncludeResult
 	{
-		public unsafe byte* source_name;
-		public nuint source_name_length;
-		public unsafe byte* content;
-		public nuint content_length;
-		public unsafe void* user_data;
+		public unsafe byte* SourceName;
+		public nuint SourceNameLength;
+		public unsafe byte* Content;
+		public nuint ContentLength;
+		public unsafe void* UserData;
 	}
 
 }

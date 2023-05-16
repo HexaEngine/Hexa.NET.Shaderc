@@ -13,7 +13,7 @@ using System.Diagnostics;
 namespace HexaEngine.Shaderc
 {
 	/// <summary>
-	/// A dispatchable handle.
+	/// An opaque handle to an object that manages all compiler state.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public readonly partial struct ShadercCompiler : IEquatable<ShadercCompiler>
@@ -36,7 +36,8 @@ namespace HexaEngine.Shaderc
 	}
 
 	/// <summary>
-	/// A dispatchable handle.
+	/// An opaque handle to an object that manages options to a single compilation
+	/// result.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public readonly partial struct ShadercCompileOptions : IEquatable<ShadercCompileOptions>
@@ -59,7 +60,14 @@ namespace HexaEngine.Shaderc
 	}
 
 	/// <summary>
-	/// A dispatchable handle.
+	/// An includer callback type for mapping an #include request to an include
+	/// result.  The user_data parameter specifies the client context.  The
+	/// requested_source parameter specifies the name of the source being requested.
+	/// The type parameter specifies the kind of inclusion request being made.
+	/// The requesting_source parameter specifies the name of the source containing
+	/// the #include request.  The includer owns the result object and its contents,
+	/// and both must remain valid until the release callback is called on the result
+	/// object.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public readonly partial struct ShadercIncludeResolveFn : IEquatable<ShadercIncludeResolveFn>
@@ -82,7 +90,7 @@ namespace HexaEngine.Shaderc
 	}
 
 	/// <summary>
-	/// A dispatchable handle.
+	/// An includer callback type for destroying an include result.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public readonly partial struct ShadercIncludeResultReleaseFn : IEquatable<ShadercIncludeResultReleaseFn>
@@ -105,7 +113,8 @@ namespace HexaEngine.Shaderc
 	}
 
 	/// <summary>
-	/// A dispatchable handle.
+	/// An opaque handle to the results of a call to any shaderc_compile_into_*()
+	/// function.
 	/// </summary>
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public readonly partial struct ShadercCompilationResult : IEquatable<ShadercCompilationResult>

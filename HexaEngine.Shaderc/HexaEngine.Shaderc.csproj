@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<AssemblyVersion>1.0.0</AssemblyVersion>
-		<PackageVersion>1.0.1</PackageVersion>
+		<PackageVersion>1.0.2</PackageVersion>
 		<Authors>Juna Meinhold</Authors>
 		<Description>A .NET wrapper for the Shaderc (v2023.3) library.</Description>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>

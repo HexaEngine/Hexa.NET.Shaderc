@@ -55,6 +55,7 @@
                     bool canUseOut = s_outReturnFunctions.Contains(cppFunction.Name);
                     var argumentsString = GetParameterSignature(cppFunction, canUseOut);
 
+                    WriteCsSummary(cppFunction.Comment, writer);
                     writer.WriteLine($"[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = \"{cppFunction.Name}\")]");
                     writer.WriteLine($"public static extern {returnCsName} {command.Key}({argumentsString});");
                     writer.WriteLine();

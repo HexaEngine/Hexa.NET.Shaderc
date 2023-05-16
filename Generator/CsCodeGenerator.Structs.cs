@@ -29,6 +29,7 @@
                 bool isUnion = cppClass.ClassKind == CppClassKind.Union;
 
                 string csName = GetCsCleanName(cppClass.Name);
+                WriteCsSummary(cppClass.Comment, writer);
                 if (isUnion)
                 {
                     writer.WriteLine("[StructLayout(LayoutKind.Explicit)]");
@@ -65,7 +66,7 @@
         private static void WriteField(CodeWriter writer, CppField field, bool isUnion = false, bool isReadOnly = false)
         {
             string csFieldName = NormalizeFieldName(field.Name);
-
+            WriteCsSummary(field.Comment, writer);
             if (isUnion)
             {
                 writer.WriteLine("[FieldOffset(0)]");

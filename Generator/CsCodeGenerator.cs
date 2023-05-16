@@ -240,8 +240,37 @@
             return GetCsTypeName(pointerType.ElementType, true);
         }
 
-        private static string GetCsSummary(CppComment comment)
+        private static bool WriteCsSummary(CppComment? comment, CodeWriter writer)
         {
+            if (comment is CppCommentFull full)
+            {
+                writer.WriteLine("/// <summary>");
+                for (int i = 0; i < full.Children.Count; i++)
+                {
+                    WriteCsSummary(full.Children[i], writer);
+                }
+                writer.WriteLine("/// </summary>");
+                return true;
+            }
+            if (comment is CppCommentParagraph paragraph)
+            {
+                for (int i = 0; i < paragraph.Children.Count; i++)
+                {
+                    WriteCsSummary(paragraph.Children[i], writer);
+                }
+                return true;
+            }
+            if (comment is CppCommentText text)
+            {
+                writer.WriteLine($"/// " + text.Text);
+                return true;
+            }
+
+            if (comment == null || comment.Kind == CppCommentKind.Null)
+            {
+                return false;
+            }
+
             throw new NotImplementedException();
         }
     }

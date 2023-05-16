@@ -29,7 +29,7 @@
                 bool isUnion = cppClass.ClassKind == CppClassKind.Union;
 
                 string csName = GetCsCleanName(cppClass.Name);
-                WriteCsSummary(cppClass.Comment, writer);
+
                 if (isUnion)
                 {
                     writer.WriteLine("[StructLayout(LayoutKind.Explicit)]");
@@ -42,6 +42,7 @@
                 bool isReadOnly = false;
                 string modifier = "partial";
 
+                WriteCsSummary(cppClass.Comment, writer);
                 using (writer.PushBlock($"public {modifier} struct {csName}"))
                 {
                     if (generateSizeOfStructs && cppClass.SizeOf > 0)

@@ -64,6 +64,7 @@
                         {
                             continue;
                         }
+
                         var commentWritten = WriteCsSummary(enumItem.Comment, writer);
                         if (enumItem.ValueExpression is CppRawExpression rawExpression)
                         {

@@ -2,12 +2,11 @@
 {
     using CppAst;
     using System.IO;
+    using System.Linq;
     using System.Text;
 
     public static partial class CsCodeGenerator
     {
-        private static bool generateSizeOfStructs = false;
-
         private static void GenerateStructAndUnions(CppCompilation compilation, string outputPath)
         {
             // Generate Structures
@@ -29,7 +28,6 @@
                 bool isUnion = cppClass.ClassKind == CppClassKind.Union;
 
                 string csName = GetCsCleanName(cppClass.Name);
-
                 if (isUnion)
                 {
                     writer.WriteLine("[StructLayout(LayoutKind.Explicit)]");
@@ -45,7 +43,7 @@
                 WriteCsSummary(cppClass.Comment, writer);
                 using (writer.PushBlock($"public {modifier} struct {csName}"))
                 {
-                    if (generateSizeOfStructs && cppClass.SizeOf > 0)
+                    if (CsCodeGeneratorSettings.Default.GenerateSizeOfStructs && cppClass.SizeOf > 0)
                     {
                         writer.WriteLine("/// <summary>");
                         writer.WriteLine($"/// The size of the <see cref=\"{csName}\"/> type, in bytes.");
@@ -139,6 +137,22 @@
 
                 writer.WriteLine($"public {fieldPrefix}{csFieldType} {csFieldName};");
             }
+        }
+
+        private static string NormalizeFieldName(string name)
+        {
+            var parts = name.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder sb = new();
+            for (int i = 0; i < parts.Length; i++)
+            {
+                sb.Append(char.ToUpper(parts[i][0]));
+                sb.Append(parts[i][1..]);
+            }
+            name = sb.ToString();
+            if (CsCodeGeneratorSettings.Default.Keywords.Contains(name))
+                return "@" + name;
+
+            return name;
         }
     }
 }

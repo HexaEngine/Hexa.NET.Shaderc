@@ -1,33 +1,14 @@
 ﻿namespace Generator
 {
+    using CppAst;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using CppAst;
 
     public static partial class CsCodeGenerator
     {
-        private static readonly Dictionary<string, string> s_knownEnumValueNames = new Dictionary<string, string>
-        {
-            {  "", "" },
-        };
-
-        private static readonly Dictionary<string, string> s_knownEnumPrefixes = new Dictionary<string, string>
-        {
-        };
-
-        private static readonly HashSet<string> s_ignoredParts = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "bit",
-        };
-
-        private static readonly HashSet<string> s_preserveCaps = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "",
-        };
-
         public static void GenerateEnums(CppCompilation compilation, string outputPath)
         {
             using var writer = new CodeWriter(Path.Combine(outputPath, "Enumerations.cs"), "System");
@@ -91,6 +72,7 @@
                         {
                             writer.WriteLine($"{enumItemName} = unchecked({enumItem.Value}),");
                         }
+
                         if (commentWritten)
                             writer.WriteLine();
                     }
@@ -102,8 +84,6 @@
 
         private static string GetEnumItemName(CppEnum @enum, string cppEnumItemName, string enumNamePrefix)
         {
-            if (cppEnumItemName.StartsWith("0x"))
-                return cppEnumItemName;
             string enumItemName = GetPrettyEnumName(cppEnumItemName, enumNamePrefix);
 
             return enumItemName;
@@ -141,12 +121,12 @@
 
         public static string GetEnumNamePrefix(string typeName)
         {
-            if (s_knownEnumPrefixes.TryGetValue(typeName, out string? knownValue))
+            if (CsCodeGeneratorSettings.Default.KnownEnumPrefixes.TryGetValue(typeName, out string? knownValue))
             {
                 return knownValue;
             }
 
-            List<string> parts = new List<string>(4);
+            List<string> parts = new(4);
             int chunkStart = 0;
             for (int i = 0; i < typeName.Length; i++)
             {
@@ -194,10 +174,13 @@
 
         private static string GetPrettyEnumName(string value, string enumPrefix)
         {
-            if (s_knownEnumValueNames.TryGetValue(value, out string? knownName))
+            if (CsCodeGeneratorSettings.Default.KnownEnumValueNames.TryGetValue(value, out string? knownName))
             {
                 return knownName;
             }
+
+            if (value.StartsWith("0x"))
+                return value;
 
             string[] parts = value.Split('_', StringSplitOptions.RemoveEmptyEntries).SelectMany(x => x.SplitByCase()).ToArray();
             string[] prefixParts = enumPrefix.Split('_', StringSplitOptions.RemoveEmptyEntries);
@@ -207,7 +190,7 @@
             for (int i = 0; i < parts.Length; i++)
             {
                 string part = parts[i];
-                if (s_ignoredParts.Contains(part) || (prefixParts.Contains(part, StringComparer.InvariantCultureIgnoreCase) && !capture))
+                if (CsCodeGeneratorSettings.Default.IgnoredParts.Contains(part, StringComparer.InvariantCultureIgnoreCase) || (prefixParts.Contains(part, StringComparer.InvariantCultureIgnoreCase) && !capture))
                 {
                     continue;
                 }

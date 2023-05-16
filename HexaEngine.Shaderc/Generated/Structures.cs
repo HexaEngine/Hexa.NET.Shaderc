@@ -12,10 +12,10 @@ using System.Runtime.InteropServices;
 
 namespace HexaEngine.Shaderc
 {
+	[StructLayout(LayoutKind.Sequential)]
 	/// <summary>
 	/// An include result.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
 	public partial struct ShadercIncludeResult
 	{
 		/// <summary>

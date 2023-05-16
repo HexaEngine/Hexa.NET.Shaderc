@@ -5,6 +5,9 @@ namespace HexaEngine.Shaderc.Tests
     {
         private ShadercCompiler compiler;
         private ShadercCompileOptions options;
+        private string filename;
+        private string entrypoint;
+        private string source;
         private nuint sourceSize;
         private byte* pSource;
         private byte* pFilename;
@@ -13,9 +16,9 @@ namespace HexaEngine.Shaderc.Tests
         [SetUp]
         public void Setup()
         {
-            string filename = "vs.hlsl";
-            string entrypoint = "main";
-            string source = File.ReadAllText(filename);
+            filename = "vs.hlsl";
+            entrypoint = "main";
+            source = File.ReadAllText(filename);
             sourceSize = (nuint)source.Length;
             pSource = GetStringUTF8(source);
             pFilename = GetStringUTF8(filename);
@@ -30,7 +33,7 @@ namespace HexaEngine.Shaderc.Tests
         [Test]
         public void HLSLCompile()
         {
-            ShadercCompilationResult result = Shaderc.ShadercCompileIntoSpv(compiler, pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
+            ShadercCompilationResult result = Shaderc.ShadercCompileIntoSpv(compiler, source, sourceSize, ShadercShaderKind.VertexShader, filename, entrypoint, options);
 
             CheckResult(result);
             CloneResult(result);

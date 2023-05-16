@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="generator.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="shaderc\env.h">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

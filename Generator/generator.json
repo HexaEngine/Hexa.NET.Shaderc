@@ -10,6 +10,12 @@
   },
   "KnownEnumPrefixes": {
   },
+  "KnownExtensionPrefixes": {
+  },
+  "KnownExtensionNames": {
+  },
+  "KnownStructMethods": {
+  },
   "IgnoredParts": [
     "bit"
   ],

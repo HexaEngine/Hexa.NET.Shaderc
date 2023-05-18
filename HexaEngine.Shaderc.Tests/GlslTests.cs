@@ -45,7 +45,7 @@ namespace HexaEngine.Shaderc.Tests
         [Test]
         public void GLSLPreprocess()
         {
-            ShadercCompilationResult result = compiler.ShadercCompileIntoPreprocessedText(pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
+            ShadercCompilationResult result = compiler.CompileIntoPreprocessedText(pSource, sourceSize, ShadercShaderKind.VertexShader, pFilename, pEntrypoint, options);
             CheckResult(result);
             var text = ResultAsString(result);
 

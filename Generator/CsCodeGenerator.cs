@@ -11,6 +11,7 @@
             GenerateEnums(compilation, outputPath);
             GenerateHandles(compilation, outputPath);
             GenerateStructAndUnions(compilation, outputPath);
+            GenerateExtensions(compilation, outputPath);
             GenerateCommands(compilation, outputPath);
         }
 
@@ -59,6 +60,17 @@
             }
 
             return sb.ToString();
+        }
+
+        private static CppFunction FindFunction(CppCompilation compilation, string name)
+        {
+            for (int i = 0; i < compilation.Functions.Count; i++)
+            {
+                var function = compilation.Functions[i];
+                if (function.Name == name)
+                    return function;
+            }
+            return null;
         }
 
         private static string GetCsTypeName(CppType? type, bool isPointer = false)

@@ -1,5 +1,6 @@
 ﻿namespace Generator
 {
+    using ClangSharp;
     using CppAst;
     using System.Collections.Generic;
     using System.IO;
@@ -54,31 +55,32 @@
                     CppFunction cppFunction = command.Value;
 
                     string returnCsName = GetCsTypeName(cppFunction.ReturnType, false);
+                    bool boolReturn = returnCsName == "bool";
                     bool canUseOut = s_outReturnFunctions.Contains(cppFunction.Name);
                     var argumentsString = GetParameterSignature(cppFunction, canUseOut);
 
                     WriteCsSummary(cppFunction.Comment, writer);
+                    if (boolReturn)
+                        writer.WriteLine("[return: MarshalAs(UnmanagedType.Bool)]");
                     writer.WriteLine($"[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = \"{cppFunction.Name}\")]");
                     writer.WriteLine($"public static extern {returnCsName} {command.Key}({argumentsString});");
                     writer.WriteLine();
-                    Console.WriteLine(command.Key + ":");
-                    Console.WriteLine(argumentsString);
-                    var sigs = GetManagedWrapperParameterSignatures(cppFunction.Parameters, argumentsString, canUseOut);
+
+                    var sigs = GetVariantParameterSignatures(cppFunction.Parameters, argumentsString, canUseOut);
                     GenerateManagedWrapperForSignatures(cppFunction, command.Key, argumentsString, sigs, writer);
-                    Console.WriteLine();
                 }
             }
         }
 
         public static void GenerateManagedWrapperForSignatures(CppFunction cppFunction, string command, string nativeSignature, List<string> signatures, CodeWriter writer)
         {
+            string returnCsName = GetCsTypeName(cppFunction.ReturnType, false);
             bool voidReturn = IsVoid(cppFunction.ReturnType);
             bool stringReturn = IsString(cppFunction.ReturnType);
-            string returnCsName = GetCsTypeName(cppFunction.ReturnType, false);
 
             if (stringReturn)
             {
-                WriteMethod(cppFunction, command, writer, voidReturn, true, "string", nativeSignature);
+                WriteMethod(writer, cppFunction, command, voidReturn, true, "string", nativeSignature);
             }
 
             for (int i = 0; i < signatures.Count; i++)
@@ -86,13 +88,13 @@
                 string signature = signatures[i];
 
                 if (stringReturn)
-                    WriteMethod(cppFunction, command, writer, voidReturn, true, "string", signature);
+                    WriteMethod(writer, cppFunction, command, voidReturn, true, "string", signature);
 
-                WriteMethod(cppFunction, command, writer, voidReturn, false, returnCsName, signature);
+                WriteMethod(writer, cppFunction, command, voidReturn, false, returnCsName, signature);
             }
         }
 
-        private static void WriteMethod(CppFunction cppFunction, string command, CodeWriter writer, bool voidReturn, bool stringReturn, string returnCsName, string signature)
+        private static void WriteMethod(CodeWriter writer, CppFunction cppFunction, string command, bool voidReturn, bool stringReturn, string returnCsName, string signature)
         {
             string[] paramList = signature.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
@@ -286,7 +288,7 @@
             return argumentBuilder.ToString();
         }
 
-        private static List<string> GetManagedWrapperParameterSignatures(IList<CppParameter> parameters, string originalSig, bool canUseOut)
+        private static List<string> GetVariantParameterSignatures(IList<CppParameter> parameters, string originalSig, bool canUseOut)
         {
             List<string> result = new();
             StringBuilder argumentBuilder = new();
@@ -332,7 +334,7 @@
                 index = 0;
                 for (int j = 0; j < parameters.Count; j++)
                 {
-                    var bit = (ix & (1 << j - 1)) != 0;
+                    var bit = (ix & (1 << j - 64)) != 0;
                     CppParameter cppParameter = parameters[j];
 
                     string paramCsTypeName;

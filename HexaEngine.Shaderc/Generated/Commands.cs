@@ -94,26 +94,6 @@ namespace HexaEngine.Shaderc
 		/// a valueless macro, the value argument should be a null pointer or the
 		/// value_length should be 0u.
 		/// </summary>
-		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, string name, nuint nameLength, byte* value, nuint valueLength)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(name);
-			ShadercCompileOptionsAddMacroDefinition(options, pStr0, nameLength, value, valueLength);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Adds a predefined macro to the compilation options. This has the same
-		/// effect as passing -Dname=value to the command-line compiler.  If value
-		/// is NULL, it has the same effect as passing -Dname to the command-line
-		/// compiler. If a macro definition with the same name has previously been
-		/// added, the value is replaced with the new value. The macro name and
-		/// value are passed in with char pointers, which point to their data, and
-		/// the lengths of their data. The strings that the name and value pointers
-		/// point to must remain valid for the duration of the call, but can be
-		/// modified or deleted after this function has returned. In case of adding
-		/// a valueless macro, the value argument should be a null pointer or the
-		/// value_length should be 0u.
-		/// </summary>
 		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, ref byte name, nuint nameLength, byte* value, nuint valueLength)
 		{
 			fixed (byte* pname = &name)
@@ -135,32 +115,10 @@ namespace HexaEngine.Shaderc
 		/// a valueless macro, the value argument should be a null pointer or the
 		/// value_length should be 0u.
 		/// </summary>
-		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, byte* name, nuint nameLength, string value, nuint valueLength)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(value);
-			ShadercCompileOptionsAddMacroDefinition(options, name, nameLength, pStr0, valueLength);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Adds a predefined macro to the compilation options. This has the same
-		/// effect as passing -Dname=value to the command-line compiler.  If value
-		/// is NULL, it has the same effect as passing -Dname to the command-line
-		/// compiler. If a macro definition with the same name has previously been
-		/// added, the value is replaced with the new value. The macro name and
-		/// value are passed in with char pointers, which point to their data, and
-		/// the lengths of their data. The strings that the name and value pointers
-		/// point to must remain valid for the duration of the call, but can be
-		/// modified or deleted after this function has returned. In case of adding
-		/// a valueless macro, the value argument should be a null pointer or the
-		/// value_length should be 0u.
-		/// </summary>
-		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, string name, nuint nameLength, string value, nuint valueLength)
+		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, string name, nuint nameLength, byte* value, nuint valueLength)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(name);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(value);
-			ShadercCompileOptionsAddMacroDefinition(options, pStr0, nameLength, pStr1, valueLength);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompileOptionsAddMacroDefinition(options, pStr0, nameLength, value, valueLength);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
@@ -198,6 +156,26 @@ namespace HexaEngine.Shaderc
 		/// a valueless macro, the value argument should be a null pointer or the
 		/// value_length should be 0u.
 		/// </summary>
+		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, byte* name, nuint nameLength, string value, nuint valueLength)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(value);
+			ShadercCompileOptionsAddMacroDefinition(options, name, nameLength, pStr0, valueLength);
+			Marshal.FreeHGlobal((nint)pStr0);
+		}
+
+		/// <summary>
+		/// Adds a predefined macro to the compilation options. This has the same
+		/// effect as passing -Dname=value to the command-line compiler.  If value
+		/// is NULL, it has the same effect as passing -Dname to the command-line
+		/// compiler. If a macro definition with the same name has previously been
+		/// added, the value is replaced with the new value. The macro name and
+		/// value are passed in with char pointers, which point to their data, and
+		/// the lengths of their data. The strings that the name and value pointers
+		/// point to must remain valid for the duration of the call, but can be
+		/// modified or deleted after this function has returned. In case of adding
+		/// a valueless macro, the value argument should be a null pointer or the
+		/// value_length should be 0u.
+		/// </summary>
 		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, ref byte name, nuint nameLength, ref byte value, nuint valueLength)
 		{
 			fixed (byte* pname = &name)
@@ -207,6 +185,28 @@ namespace HexaEngine.Shaderc
 					ShadercCompileOptionsAddMacroDefinition(options, pname, nameLength, pvalue, valueLength);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Adds a predefined macro to the compilation options. This has the same
+		/// effect as passing -Dname=value to the command-line compiler.  If value
+		/// is NULL, it has the same effect as passing -Dname to the command-line
+		/// compiler. If a macro definition with the same name has previously been
+		/// added, the value is replaced with the new value. The macro name and
+		/// value are passed in with char pointers, which point to their data, and
+		/// the lengths of their data. The strings that the name and value pointers
+		/// point to must remain valid for the duration of the call, but can be
+		/// modified or deleted after this function has returned. In case of adding
+		/// a valueless macro, the value argument should be a null pointer or the
+		/// value_length should be 0u.
+		/// </summary>
+		public static void ShadercCompileOptionsAddMacroDefinition(ShadercCompileOptions options, string name, nuint nameLength, string value, nuint valueLength)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(name);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(value);
+			ShadercCompileOptionsAddMacroDefinition(options, pStr0, nameLength, pStr1, valueLength);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -359,17 +359,6 @@ namespace HexaEngine.Shaderc
 		/// Sets a descriptor set and binding for an HLSL register in the given stage.
 		/// This method keeps a copy of the string data.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, byte* set, byte* binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, set, binding);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Sets a descriptor set and binding for an HLSL register in the given stage.
-		/// This method keeps a copy of the string data.
-		/// </summary>
 		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, ref byte reg, byte* set, byte* binding)
 		{
 			fixed (byte* preg = &reg)
@@ -382,23 +371,10 @@ namespace HexaEngine.Shaderc
 		/// Sets a descriptor set and binding for an HLSL register in the given stage.
 		/// This method keeps a copy of the string data.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, string set, byte* binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, pStr0, binding);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Sets a descriptor set and binding for an HLSL register in the given stage.
-		/// This method keeps a copy of the string data.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, string set, byte* binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, byte* set, byte* binding)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, pStr1, binding);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, set, binding);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
@@ -418,23 +394,10 @@ namespace HexaEngine.Shaderc
 		/// Sets a descriptor set and binding for an HLSL register in the given stage.
 		/// This method keeps a copy of the string data.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, byte* set, string binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, string set, byte* binding)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, set, pStr0);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Sets a descriptor set and binding for an HLSL register in the given stage.
-		/// This method keeps a copy of the string data.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, byte* set, string binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, set, pStr1);
-			Marshal.FreeHGlobal((nint)pStr1);
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, pStr0, binding);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
@@ -457,26 +420,11 @@ namespace HexaEngine.Shaderc
 		/// Sets a descriptor set and binding for an HLSL register in the given stage.
 		/// This method keeps a copy of the string data.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, string set, string binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, pStr0, pStr1);
-			Marshal.FreeHGlobal((nint)pStr1);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Sets a descriptor set and binding for an HLSL register in the given stage.
-		/// This method keeps a copy of the string data.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, string set, string binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, string set, byte* binding)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
 			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, pStr1, pStr2);
-			Marshal.FreeHGlobal((nint)pStr2);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, pStr1, binding);
 			Marshal.FreeHGlobal((nint)pStr1);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
@@ -491,6 +439,17 @@ namespace HexaEngine.Shaderc
 			{
 				ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, set, pbinding);
 			}
+		}
+
+		/// <summary>
+		/// Sets a descriptor set and binding for an HLSL register in the given stage.
+		/// This method keeps a copy of the string data.
+		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, byte* set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, set, pStr0);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -512,6 +471,19 @@ namespace HexaEngine.Shaderc
 		/// Sets a descriptor set and binding for an HLSL register in the given stage.
 		/// This method keeps a copy of the string data.
 		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, byte* set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, set, pStr1);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+		}
+
+		/// <summary>
+		/// Sets a descriptor set and binding for an HLSL register in the given stage.
+		/// This method keeps a copy of the string data.
+		/// </summary>
 		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, ref byte set, ref byte binding)
 		{
 			fixed (byte* pset = &set)
@@ -521,6 +493,19 @@ namespace HexaEngine.Shaderc
 					ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, pset, pbinding);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Sets a descriptor set and binding for an HLSL register in the given stage.
+		/// This method keeps a copy of the string data.
+		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, byte* reg, string set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, reg, pStr0, pStr1);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -542,22 +527,26 @@ namespace HexaEngine.Shaderc
 		}
 
 		/// <summary>
-		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
-		/// but affects all shader stages.
+		/// Sets a descriptor set and binding for an HLSL register in the given stage.
+		/// This method keeps a copy of the string data.
 		/// </summary>
-		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_options_set_hlsl_register_set_and_binding")]
-		public static extern void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, byte* set, byte* binding);
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(ShadercCompileOptions options, ShadercShaderKind shaderKind, string reg, string set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBindingForStage(options, shaderKind, pStr0, pStr1, pStr2);
+			Marshal.FreeHGlobal((nint)pStr2);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+		}
 
 		/// <summary>
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
 		/// but affects all shader stages.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, byte* set, byte* binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, set, binding);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
+		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_options_set_hlsl_register_set_and_binding")]
+		public static extern void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, byte* set, byte* binding);
 
 		/// <summary>
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
@@ -575,23 +564,10 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
 		/// but affects all shader stages.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, string set, byte* binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, pStr0, binding);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
-		/// but affects all shader stages.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, string set, byte* binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, byte* set, byte* binding)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, pStr1, binding);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, set, binding);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
@@ -611,23 +587,10 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
 		/// but affects all shader stages.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, byte* set, string binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, string set, byte* binding)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, set, pStr0);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
-		/// but affects all shader stages.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, byte* set, string binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, set, pStr1);
-			Marshal.FreeHGlobal((nint)pStr1);
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, pStr0, binding);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
@@ -650,26 +613,11 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
 		/// but affects all shader stages.
 		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, string set, string binding)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, pStr0, pStr1);
-			Marshal.FreeHGlobal((nint)pStr1);
-			Marshal.FreeHGlobal((nint)pStr0);
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
-		/// but affects all shader stages.
-		/// </summary>
-		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, string set, string binding)
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, string set, byte* binding)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
 			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
-			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(binding);
-			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, pStr1, pStr2);
-			Marshal.FreeHGlobal((nint)pStr2);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, pStr1, binding);
 			Marshal.FreeHGlobal((nint)pStr1);
 			Marshal.FreeHGlobal((nint)pStr0);
 		}
@@ -684,6 +632,17 @@ namespace HexaEngine.Shaderc
 			{
 				ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, set, pbinding);
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
+		/// but affects all shader stages.
+		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, byte* set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, set, pStr0);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -705,6 +664,19 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
 		/// but affects all shader stages.
 		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, byte* set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, set, pStr1);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
+		/// but affects all shader stages.
+		/// </summary>
 		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, ref byte set, ref byte binding)
 		{
 			fixed (byte* pset = &set)
@@ -714,6 +686,19 @@ namespace HexaEngine.Shaderc
 					ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, pset, pbinding);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
+		/// but affects all shader stages.
+		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, byte* reg, string set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, reg, pStr0, pStr1);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -732,6 +717,21 @@ namespace HexaEngine.Shaderc
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_options_set_hlsl_register_set_and_binding_for_stage,
+		/// but affects all shader stages.
+		/// </summary>
+		public static void ShadercCompileOptionsSetHlslRegisterSetAndBinding(ShadercCompileOptions options, string reg, string set, string binding)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(reg);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(set);
+			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(binding);
+			ShadercCompileOptionsSetHlslRegisterSetAndBinding(options, pStr0, pStr1, pStr2);
+			Marshal.FreeHGlobal((nint)pStr2);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
 		}
 
 		/// <summary>
@@ -807,35 +807,6 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Takes a GLSL source string and the associated shader kind, input file
-		/// name, compiles it according to the given additional_options. If the shader
-		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
-		/// the compiler will try to deduce the shader kind from the source
-		/// string and a failure in deducing will generate an error. Currently only
-		/// #pragma annotation is supported. If the shader kind is set to one of the
-		/// default shader kinds, the compiler will fall back to the default shader
-		/// kind in case it failed to deduce the shader kind from source string.
-		/// The input_file_name is a null-termintated string. It is used as a tag to
-		/// identify the source string in cases like emitting error messages. It
-		/// doesn't have to be a 'file name'.
-		/// The source string will be compiled into SPIR-V binary and a
-		/// shaderc_compilation_result will be returned to hold the results.
-		/// The entry_point_name null-terminated string defines the name of the entry
-		/// point to associate with this GLSL source. If the additional_options
-		/// parameter is not null, then the compilation is modified by any options
-		/// present.  May be safely called from multiple threads without explicit
-		/// synchronization. If there was failure in allocating the compiler object,
-		/// null will be returned.
-		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -866,41 +837,10 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Takes a GLSL source string and the associated shader kind, input file
-		/// name, compiles it according to the given additional_options. If the shader
-		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
-		/// the compiler will try to deduce the shader kind from the source
-		/// string and a failure in deducing will generate an error. Currently only
-		/// #pragma annotation is supported. If the shader kind is set to one of the
-		/// default shader kinds, the compiler will fall back to the default shader
-		/// kind in case it failed to deduce the shader kind from source string.
-		/// The input_file_name is a null-termintated string. It is used as a tag to
-		/// identify the source string in cases like emitting error messages. It
-		/// doesn't have to be a 'file name'.
-		/// The source string will be compiled into SPIR-V binary and a
-		/// shaderc_compilation_result will be returned to hold the results.
-		/// The entry_point_name null-terminated string defines the name of the entry
-		/// point to associate with this GLSL source. If the additional_options
-		/// parameter is not null, then the compilation is modified by any options
-		/// present.  May be safely called from multiple threads without explicit
-		/// synchronization. If there was failure in allocating the compiler object,
-		/// null will be returned.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -956,41 +896,10 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Takes a GLSL source string and the associated shader kind, input file
-		/// name, compiles it according to the given additional_options. If the shader
-		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
-		/// the compiler will try to deduce the shader kind from the source
-		/// string and a failure in deducing will generate an error. Currently only
-		/// #pragma annotation is supported. If the shader kind is set to one of the
-		/// default shader kinds, the compiler will fall back to the default shader
-		/// kind in case it failed to deduce the shader kind from source string.
-		/// The input_file_name is a null-termintated string. It is used as a tag to
-		/// identify the source string in cases like emitting error messages. It
-		/// doesn't have to be a 'file name'.
-		/// The source string will be compiled into SPIR-V binary and a
-		/// shaderc_compilation_result will be returned to hold the results.
-		/// The entry_point_name null-terminated string defines the name of the entry
-		/// point to associate with this GLSL source. If the additional_options
-		/// parameter is not null, then the compilation is modified by any options
-		/// present.  May be safely called from multiple threads without explicit
-		/// synchronization. If there was failure in allocating the compiler object,
-		/// null will be returned.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -1049,44 +958,11 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Takes a GLSL source string and the associated shader kind, input file
-		/// name, compiles it according to the given additional_options. If the shader
-		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
-		/// the compiler will try to deduce the shader kind from the source
-		/// string and a failure in deducing will generate an error. Currently only
-		/// #pragma annotation is supported. If the shader kind is set to one of the
-		/// default shader kinds, the compiler will fall back to the default shader
-		/// kind in case it failed to deduce the shader kind from source string.
-		/// The input_file_name is a null-termintated string. It is used as a tag to
-		/// identify the source string in cases like emitting error messages. It
-		/// doesn't have to be a 'file name'.
-		/// The source string will be compiled into SPIR-V binary and a
-		/// shaderc_compilation_result will be returned to hold the results.
-		/// The entry_point_name null-terminated string defines the name of the entry
-		/// point to associate with this GLSL source. If the additional_options
-		/// parameter is not null, then the compilation is modified by any options
-		/// present.  May be safely called from multiple threads without explicit
-		/// synchronization. If there was failure in allocating the compiler object,
-		/// null will be returned.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
 			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr2);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr1);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
@@ -1143,6 +1019,35 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Takes a GLSL source string and the associated shader kind, input file
+		/// name, compiles it according to the given additional_options. If the shader
+		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
+		/// the compiler will try to deduce the shader kind from the source
+		/// string and a failure in deducing will generate an error. Currently only
+		/// #pragma annotation is supported. If the shader kind is set to one of the
+		/// default shader kinds, the compiler will fall back to the default shader
+		/// kind in case it failed to deduce the shader kind from source string.
+		/// The input_file_name is a null-termintated string. It is used as a tag to
+		/// identify the source string in cases like emitting error messages. It
+		/// doesn't have to be a 'file name'.
+		/// The source string will be compiled into SPIR-V binary and a
+		/// shaderc_compilation_result will be returned to hold the results.
+		/// The entry_point_name null-terminated string defines the name of the entry
+		/// point to associate with this GLSL source. If the additional_options
+		/// parameter is not null, then the compilation is modified by any options
+		/// present.  May be safely called from multiple threads without explicit
+		/// synchronization. If there was failure in allocating the compiler object,
+		/// null will be returned.
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1153,6 +1058,37 @@ namespace HexaEngine.Shaderc
 					return ret;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Takes a GLSL source string and the associated shader kind, input file
+		/// name, compiles it according to the given additional_options. If the shader
+		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
+		/// the compiler will try to deduce the shader kind from the source
+		/// string and a failure in deducing will generate an error. Currently only
+		/// #pragma annotation is supported. If the shader kind is set to one of the
+		/// default shader kinds, the compiler will fall back to the default shader
+		/// kind in case it failed to deduce the shader kind from source string.
+		/// The input_file_name is a null-termintated string. It is used as a tag to
+		/// identify the source string in cases like emitting error messages. It
+		/// doesn't have to be a 'file name'.
+		/// The source string will be compiled into SPIR-V binary and a
+		/// shaderc_compilation_result will be returned to hold the results.
+		/// The entry_point_name null-terminated string defines the name of the entry
+		/// point to associate with this GLSL source. If the additional_options
+		/// parameter is not null, then the compilation is modified by any options
+		/// present.  May be safely called from multiple threads without explicit
+		/// synchronization. If there was failure in allocating the compiler object,
+		/// null will be returned.
+		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1209,6 +1145,37 @@ namespace HexaEngine.Shaderc
 		/// synchronization. If there was failure in allocating the compiler object,
 		/// null will be returned.
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Takes a GLSL source string and the associated shader kind, input file
+		/// name, compiles it according to the given additional_options. If the shader
+		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
+		/// the compiler will try to deduce the shader kind from the source
+		/// string and a failure in deducing will generate an error. Currently only
+		/// #pragma annotation is supported. If the shader kind is set to one of the
+		/// default shader kinds, the compiler will fall back to the default shader
+		/// kind in case it failed to deduce the shader kind from source string.
+		/// The input_file_name is a null-termintated string. It is used as a tag to
+		/// identify the source string in cases like emitting error messages. It
+		/// doesn't have to be a 'file name'.
+		/// The source string will be compiled into SPIR-V binary and a
+		/// shaderc_compilation_result will be returned to hold the results.
+		/// The entry_point_name null-terminated string defines the name of the entry
+		/// point to associate with this GLSL source. If the additional_options
+		/// parameter is not null, then the compilation is modified by any options
+		/// present.  May be safely called from multiple threads without explicit
+		/// synchronization. If there was failure in allocating the compiler object,
+		/// null will be returned.
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, ref byte inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1225,25 +1192,45 @@ namespace HexaEngine.Shaderc
 		}
 
 		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
-		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
-		/// by the SPIRV-Tools open source project.
+		/// Takes a GLSL source string and the associated shader kind, input file
+		/// name, compiles it according to the given additional_options. If the shader
+		/// kind is not set to a specified kind, but shaderc_glslc_infer_from_source,
+		/// the compiler will try to deduce the shader kind from the source
+		/// string and a failure in deducing will generate an error. Currently only
+		/// #pragma annotation is supported. If the shader kind is set to one of the
+		/// default shader kinds, the compiler will fall back to the default shader
+		/// kind in case it failed to deduce the shader kind from source string.
+		/// The input_file_name is a null-termintated string. It is used as a tag to
+		/// identify the source string in cases like emitting error messages. It
+		/// doesn't have to be a 'file name'.
+		/// The source string will be compiled into SPIR-V binary and a
+		/// shaderc_compilation_result will be returned to hold the results.
+		/// The entry_point_name null-terminated string defines the name of the entry
+		/// point to associate with this GLSL source. If the additional_options
+		/// parameter is not null, then the compilation is modified by any options
+		/// present.  May be safely called from multiple threads without explicit
+		/// synchronization. If there was failure in allocating the compiler object,
+		/// null will be returned.
 		/// </summary>
-		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_into_spv_assembly")]
-		public static extern ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions);
+		public static ShadercCompilationResult ShadercCompileIntoSpv(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpv(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr2);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
 
 		/// <summary>
 		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
+		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_into_spv_assembly")]
+		public static extern ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions);
 
 		/// <summary>
 		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
@@ -1264,25 +1251,10 @@ namespace HexaEngine.Shaderc
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
-		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
-		/// by the SPIRV-Tools open source project.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -1306,25 +1278,10 @@ namespace HexaEngine.Shaderc
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
-		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
-		/// by the SPIRV-Tools open source project.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -1351,28 +1308,11 @@ namespace HexaEngine.Shaderc
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
-		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
-		/// by the SPIRV-Tools open source project.
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
 			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr2);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr1);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
@@ -1397,6 +1337,19 @@ namespace HexaEngine.Shaderc
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
+		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
+		/// by the SPIRV-Tools open source project.
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1407,6 +1360,21 @@ namespace HexaEngine.Shaderc
 					return ret;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
+		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
+		/// by the SPIRV-Tools open source project.
+		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1431,6 +1399,21 @@ namespace HexaEngine.Shaderc
 		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
 		/// by the SPIRV-Tools open source project.
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
+		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
+		/// by the SPIRV-Tools open source project.
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, ref byte inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1447,23 +1430,28 @@ namespace HexaEngine.Shaderc
 		}
 
 		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
-		/// code instead of a SPIR-V binary module
+		/// Like shaderc_compile_into_spv, but the result contains SPIR-V assembly text
+		/// instead of a SPIR-V binary module.  The SPIR-V assembly syntax is as defined
+		/// by the SPIRV-Tools open source project.
 		/// </summary>
-		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_into_preprocessed_text")]
-		public static extern ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions);
+		public static ShadercCompilationResult ShadercCompileIntoSpvAssembly(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoSpvAssembly(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr2);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
 
 		/// <summary>
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
+		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_compile_into_preprocessed_text")]
+		public static extern ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions);
 
 		/// <summary>
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
@@ -1482,24 +1470,10 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
-		/// code instead of a SPIR-V binary module
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -1521,24 +1495,10 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
-		/// code instead of a SPIR-V binary module
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, pStr0, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
 		}
@@ -1563,27 +1523,11 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
-		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr1);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
-		}
-
-		/// <summary>
-		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
-		/// code instead of a SPIR-V binary module
-		/// </summary>
-		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, byte* entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
 			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
-			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
-			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr2);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, pStr1, entryPointName, additionalOptions);
 			Marshal.FreeHGlobal((nint)pStr1);
 			Marshal.FreeHGlobal((nint)pStr0);
 			return ret;
@@ -1606,6 +1550,18 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, inputFileName, pStr0, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
+		/// code instead of a SPIR-V binary module
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1616,6 +1572,20 @@ namespace HexaEngine.Shaderc
 					return ret;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
+		/// code instead of a SPIR-V binary module
+		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, byte* inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, inputFileName, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1638,6 +1608,20 @@ namespace HexaEngine.Shaderc
 		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
 		/// code instead of a SPIR-V binary module
 		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, byte* sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, sourceText, sourceTextSize, shaderKind, pStr0, pStr1, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
+		/// code instead of a SPIR-V binary module
+		/// </summary>
 		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, ref byte sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, ref byte inputFileName, ref byte entryPointName, ShadercCompileOptions additionalOptions)
 		{
 			fixed (byte* psourceText = &sourceText)
@@ -1651,6 +1635,22 @@ namespace HexaEngine.Shaderc
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Like shaderc_compile_into_spv, but the result contains preprocessed source
+		/// code instead of a SPIR-V binary module
+		/// </summary>
+		public static ShadercCompilationResult ShadercCompileIntoPreprocessedText(ShadercCompiler compiler, string sourceText, nuint sourceTextSize, ShadercShaderKind shaderKind, string inputFileName, string entryPointName, ShadercCompileOptions additionalOptions)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceText);
+			byte* pStr1 = (byte*)Marshal.StringToHGlobalAnsi(inputFileName);
+			byte* pStr2 = (byte*)Marshal.StringToHGlobalAnsi(entryPointName);
+			ShadercCompilationResult ret = ShadercCompileIntoPreprocessedText(compiler, pStr0, sourceTextSize, shaderKind, pStr1, pStr2, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr2);
+			Marshal.FreeHGlobal((nint)pStr1);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1678,12 +1678,13 @@ namespace HexaEngine.Shaderc
 		/// If there was failure in allocating the compiler object, null will be
 		/// returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercAssembleIntoSpv(ShadercCompiler compiler, string sourceAssembly, nuint sourceAssemblySize, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercAssembleIntoSpv(ShadercCompiler compiler, ref byte sourceAssembly, nuint sourceAssemblySize, ShadercCompileOptions additionalOptions)
 		{
-			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceAssembly);
-			ShadercCompilationResult ret = ShadercAssembleIntoSpv(compiler, pStr0, sourceAssemblySize, additionalOptions);
-			Marshal.FreeHGlobal((nint)pStr0);
-			return ret;
+			fixed (byte* psourceAssembly = &sourceAssembly)
+			{
+				ShadercCompilationResult ret = ShadercAssembleIntoSpv(compiler, psourceAssembly, sourceAssemblySize, additionalOptions);
+				return ret;
+			}
 		}
 
 		/// <summary>
@@ -1697,13 +1698,12 @@ namespace HexaEngine.Shaderc
 		/// If there was failure in allocating the compiler object, null will be
 		/// returned.
 		/// </summary>
-		public static ShadercCompilationResult ShadercAssembleIntoSpv(ShadercCompiler compiler, ref byte sourceAssembly, nuint sourceAssemblySize, ShadercCompileOptions additionalOptions)
+		public static ShadercCompilationResult ShadercAssembleIntoSpv(ShadercCompiler compiler, string sourceAssembly, nuint sourceAssemblySize, ShadercCompileOptions additionalOptions)
 		{
-			fixed (byte* psourceAssembly = &sourceAssembly)
-			{
-				ShadercCompilationResult ret = ShadercAssembleIntoSpv(compiler, psourceAssembly, sourceAssemblySize, additionalOptions);
-				return ret;
-			}
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(sourceAssembly);
+			ShadercCompilationResult ret = ShadercAssembleIntoSpv(compiler, pStr0, sourceAssemblySize, additionalOptions);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1836,6 +1836,7 @@ namespace HexaEngine.Shaderc
 		/// the string can not be parsed. Returns true when the parsing succeeds. The
 		/// parsed version and profile are returned through arguments.
 		/// </summary>
+		[return: MarshalAs(UnmanagedType.Bool)]
 		[DllImport(LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "shaderc_parse_version_profile")]
 		public static extern bool ShadercParseVersionProfile(byte* str, int* version, ShadercProfile* profile);
 
@@ -1860,13 +1861,12 @@ namespace HexaEngine.Shaderc
 		/// the string can not be parsed. Returns true when the parsing succeeds. The
 		/// parsed version and profile are returned through arguments.
 		/// </summary>
-		public static bool ShadercParseVersionProfile(byte* str, ref int version, ShadercProfile* profile)
+		public static bool ShadercParseVersionProfile(string str, int* version, ShadercProfile* profile)
 		{
-			fixed (int* pversion = &version)
-			{
-				bool ret = ShadercParseVersionProfile(str, pversion, profile);
-				return ret;
-			}
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(str);
+			bool ret = ShadercParseVersionProfile(pStr0, version, profile);
+			Marshal.FreeHGlobal((nint)pStr0);
+			return ret;
 		}
 
 		/// <summary>
@@ -1875,11 +1875,11 @@ namespace HexaEngine.Shaderc
 		/// the string can not be parsed. Returns true when the parsing succeeds. The
 		/// parsed version and profile are returned through arguments.
 		/// </summary>
-		public static bool ShadercParseVersionProfile(byte* str, int* version, ref ShadercProfile profile)
+		public static bool ShadercParseVersionProfile(byte* str, ref int version, ShadercProfile* profile)
 		{
-			fixed (ShadercProfile* pprofile = &profile)
+			fixed (int* pversion = &version)
 			{
-				bool ret = ShadercParseVersionProfile(str, version, pprofile);
+				bool ret = ShadercParseVersionProfile(str, pversion, profile);
 				return ret;
 			}
 		}
@@ -1908,15 +1908,29 @@ namespace HexaEngine.Shaderc
 		/// the string can not be parsed. Returns true when the parsing succeeds. The
 		/// parsed version and profile are returned through arguments.
 		/// </summary>
-		public static bool ShadercParseVersionProfile(byte* str, ref int version, ref ShadercProfile profile)
+		public static bool ShadercParseVersionProfile(string str, ref int version, ShadercProfile* profile)
 		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(str);
 			fixed (int* pversion = &version)
 			{
-				fixed (ShadercProfile* pprofile = &profile)
-				{
-					bool ret = ShadercParseVersionProfile(str, pversion, pprofile);
-					return ret;
-				}
+				bool ret = ShadercParseVersionProfile(pStr0, pversion, profile);
+				Marshal.FreeHGlobal((nint)pStr0);
+				return ret;
+			}
+		}
+
+		/// <summary>
+		/// Parses the version and profile from a given null-terminated string
+		/// containing both version and profile, like: '450core'. Returns false if
+		/// the string can not be parsed. Returns true when the parsing succeeds. The
+		/// parsed version and profile are returned through arguments.
+		/// </summary>
+		public static bool ShadercParseVersionProfile(byte* str, int* version, ref ShadercProfile profile)
+		{
+			fixed (ShadercProfile* pprofile = &profile)
+			{
+				bool ret = ShadercParseVersionProfile(str, version, pprofile);
+				return ret;
 			}
 		}
 
@@ -1944,6 +1958,41 @@ namespace HexaEngine.Shaderc
 		/// the string can not be parsed. Returns true when the parsing succeeds. The
 		/// parsed version and profile are returned through arguments.
 		/// </summary>
+		public static bool ShadercParseVersionProfile(string str, int* version, ref ShadercProfile profile)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(str);
+			fixed (ShadercProfile* pprofile = &profile)
+			{
+				bool ret = ShadercParseVersionProfile(pStr0, version, pprofile);
+				Marshal.FreeHGlobal((nint)pStr0);
+				return ret;
+			}
+		}
+
+		/// <summary>
+		/// Parses the version and profile from a given null-terminated string
+		/// containing both version and profile, like: '450core'. Returns false if
+		/// the string can not be parsed. Returns true when the parsing succeeds. The
+		/// parsed version and profile are returned through arguments.
+		/// </summary>
+		public static bool ShadercParseVersionProfile(byte* str, ref int version, ref ShadercProfile profile)
+		{
+			fixed (int* pversion = &version)
+			{
+				fixed (ShadercProfile* pprofile = &profile)
+				{
+					bool ret = ShadercParseVersionProfile(str, pversion, pprofile);
+					return ret;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Parses the version and profile from a given null-terminated string
+		/// containing both version and profile, like: '450core'. Returns false if
+		/// the string can not be parsed. Returns true when the parsing succeeds. The
+		/// parsed version and profile are returned through arguments.
+		/// </summary>
 		public static bool ShadercParseVersionProfile(ref byte str, ref int version, ref ShadercProfile profile)
 		{
 			fixed (byte* pstr = &str)
@@ -1955,6 +2004,26 @@ namespace HexaEngine.Shaderc
 						bool ret = ShadercParseVersionProfile(pstr, pversion, pprofile);
 						return ret;
 					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Parses the version and profile from a given null-terminated string
+		/// containing both version and profile, like: '450core'. Returns false if
+		/// the string can not be parsed. Returns true when the parsing succeeds. The
+		/// parsed version and profile are returned through arguments.
+		/// </summary>
+		public static bool ShadercParseVersionProfile(string str, ref int version, ref ShadercProfile profile)
+		{
+			byte* pStr0 = (byte*)Marshal.StringToHGlobalAnsi(str);
+			fixed (int* pversion = &version)
+			{
+				fixed (ShadercProfile* pprofile = &profile)
+				{
+					bool ret = ShadercParseVersionProfile(pStr0, pversion, pprofile);
+					Marshal.FreeHGlobal((nint)pStr0);
+					return ret;
 				}
 			}
 		}

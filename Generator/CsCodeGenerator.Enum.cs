@@ -125,7 +125,10 @@
             {
                 return knownValue;
             }
-
+            if (typeName.Contains('_'))
+            {
+                return typeName;
+            }
             List<string> parts = new(4);
             int chunkStart = 0;
             for (int i = 0; i < typeName.Length; i++)

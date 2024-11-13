@@ -2010,7 +2010,7 @@ namespace Hexa.NET.Shaderc
 		/// Sets whether 16-bit types are supported in HLSL or not.<br/>
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void CompileOptionsSetHlsl16TypesNative(ShadercCompileOptions options, byte enable)
+		internal static void CompileOptionsSetHlsl16BitTypesNative(ShadercCompileOptions options, byte enable)
 		{
 			#if NET5_0_OR_GREATER
 			((delegate* unmanaged[Cdecl]<ShadercCompileOptions, byte, void>)funcTable[27])(options, enable);
@@ -2022,9 +2022,9 @@ namespace Hexa.NET.Shaderc
 		/// <summary>
 		/// Sets whether 16-bit types are supported in HLSL or not.<br/>
 		/// </summary>
-		public static void CompileOptionsSetHlsl16Types(ShadercCompileOptions options, bool enable)
+		public static void CompileOptionsSetHlsl16BitTypes(ShadercCompileOptions options, bool enable)
 		{
-			CompileOptionsSetHlsl16TypesNative(options, enable ? (byte)1 : (byte)0);
+			CompileOptionsSetHlsl16BitTypesNative(options, enable ? (byte)1 : (byte)0);
 		}
 
 		/// <summary>

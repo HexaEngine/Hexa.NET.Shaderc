@@ -3689,9 +3689,9 @@ namespace Hexa.NET.Shaderc
 		/// <summary>
 		/// Sets whether 16-bit types are supported in HLSL or not.<br/>
 		/// </summary>
-		public static void SetHlsl16Types(this ShadercCompileOptions options, bool enable)
+		public static void SetHlsl16BitTypes(this ShadercCompileOptions options, bool enable)
 		{
-			Shaderc.CompileOptionsSetHlsl16TypesNative(options, enable ? (byte)1 : (byte)0);
+			Shaderc.CompileOptionsSetHlsl16BitTypesNative(options, enable ? (byte)1 : (byte)0);
 		}
 
 		/// <summary>

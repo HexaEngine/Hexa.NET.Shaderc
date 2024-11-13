@@ -1,12 +1,4 @@
 {
   "Namespace": "Hexa.NET.Shaderc",
-  "ApiName": "Shaderc",
-  "LibName": "shaderc_shared",
-  "GenerateSizeOfStructs": false,
-  "IgnoredParts": [
-    "bit"
-  ],
-  "TypeMappings": {
-
-  }
+  "ApiName": "Shaderc"
 }

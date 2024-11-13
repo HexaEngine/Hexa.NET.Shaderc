@@ -81,7 +81,7 @@ jobs:
     - name: Configure Shaderc with CMake for Windows
       if: matrix.os == 'windows-latest'
       run: | 
-        cd shaderc/libshaderc
+        cd shaderc
         cmake -S ./ -B ./build -A ${{ matrix.cmake-arch }} -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
 
     - name: Build Shaderc

@@ -53,48 +53,53 @@ jobs:
     - name: Install Cross-Compilation Tools for ARM64
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
       run: |
-        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+
+    - name: Install dependencies for Shaderc
+      run: |
+        cd shaderc
+        python ./utils/git-sync-deps
 
     - name: Configure Shaderc with CMake for ARM64 on Linux
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
       run: |
-        cd shaderc/libshaderc
-        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
+        cd shaderc
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
 
     - name: Configure Shaderc with CMake on Linux (x86_64)
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64'
       run: |
-        cd shaderc/libshaderc
-        cmake -S ./ -B ./build
+        cd shaderc
+        cmake -S ./ -B ./build -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
 
     - name: Configure Shaderc with CMake for macOS
       if: matrix.os == 'macos-latest'
       run: | 
-        cd shaderc/libshaderc
-        cmake -S ./ -B ./build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}
+        cd shaderc
+        cmake -S ./ -B ./build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }} -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
 
     - name: Configure Shaderc with CMake for Windows
       if: matrix.os == 'windows-latest'
       run: | 
         cd shaderc/libshaderc
-        cmake -S ./ -B ./build -A ${{ matrix.cmake-arch }}
+        cmake -S ./ -B ./build -A ${{ matrix.cmake-arch }} -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
 
     - name: Build Shaderc
       run: |
-        cd shaderc/libshaderc
+        cd shaderc
         cmake --build ./ --config Release
 
     - name: Move Windows binaries
       if: matrix.os == 'windows-latest'
       run: |
-        mv shaderc/libshaderc/build/Release/*.dll shaderc/libshaderc/build/
+        mv shaderc/build/libshaderc/Release/*.dll shaderc/build/libshaderc/
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4.3.4
       with:
         name: shaderc-${{ matrix.os }}-${{ matrix.arch }}-artifacts 
         path: |
-          shaderc/libshaderc/build/*.dll
-          shaderc/libshaderc/build/*.so
-          shaderc/libshaderc/build/*.dylib
+          shaderc/build/libshaderc/*.dll
+          shaderc/build/libshaderc/*.so
+          shaderc/build/libshaderc/*.dylib
         if-no-files-found: ignore # 'warn' or 'ignore' or 'error'

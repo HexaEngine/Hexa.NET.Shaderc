@@ -87,7 +87,7 @@ jobs:
     - name: Build Shaderc
       run: |
         cd shaderc
-        cmake --build ./ --config Release
+        cmake --build ./build --config Release
 
     - name: Move Windows binaries
       if: matrix.os == 'windows-latest'

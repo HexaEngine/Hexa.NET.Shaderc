@@ -1,0 +1,100 @@
+name: Build Shaderc Libraries
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: x86_64
+            cmake-arch: x64
+            vcpkg-triplet: x64-linux
+          - os: ubuntu-latest
+            arch: arm64
+            cmake-arch: aarch64
+            vcpkg-triplet: arm64-linux
+          - os: windows-latest
+            arch: x86_64
+            cmake-arch: x64
+            vcpkg-triplet: x64-windows-static
+          - os: windows-latest
+            arch: x86
+            cmake-arch: win32
+            vcpkg-triplet: x86-windows-static
+          - os: windows-latest
+            arch: arm64
+            cmake-arch: arm64
+            vcpkg-triplet: arm64-windows-static
+          - os: macos-latest
+            arch: x86_64
+            cmake-arch: x86_64
+            vcpkg-triplet: x64-osx
+          - os: macos-latest
+            arch: arm64
+            cmake-arch: arm64
+            vcpkg-triplet: arm64-osx
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: 'google/shaderc'
+        path: 'shaderc'
+        ref: 'v2024.3'
+        submodules: true
+
+    - name: Install dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake
+        
+    - name: Install Cross-Compilation Tools for ARM64
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
+      run: |
+        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+    - name: Configure Shaderc with CMake for ARM64 on Linux
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
+      run: |
+        cd shaderc/libshaderc
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
+
+    - name: Configure Shaderc with CMake on Linux (x86_64)
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64'
+      run: |
+        cd shaderc/libshaderc
+        cmake -S ./ -B ./build
+
+    - name: Configure Shaderc with CMake for macOS
+      if: matrix.os == 'macos-latest'
+      run: | 
+        cd shaderc/libshaderc
+        cmake -S ./ -B ./build -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake-arch }}
+
+    - name: Configure Shaderc with CMake for Windows
+      if: matrix.os == 'windows-latest'
+      run: | 
+        cd shaderc/libshaderc
+        cmake -S ./ -B ./build -A ${{ matrix.cmake-arch }}
+
+    - name: Build Shaderc
+      run: |
+        cd shaderc/libshaderc
+        cmake --build ./ --config Release
+
+    - name: Move Windows binaries
+      if: matrix.os == 'windows-latest'
+      run: |
+        mv shaderc/libshaderc/build/Release/*.dll shaderc/libshaderc/build/
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: shaderc-${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+        path: |
+          shaderc/libshaderc/build/*.dll
+          shaderc/libshaderc/build/*.so
+          shaderc/libshaderc/build/*.dylib
+        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
